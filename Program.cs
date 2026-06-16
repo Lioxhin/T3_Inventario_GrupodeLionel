@@ -37,11 +37,17 @@ namespace GestionInventario
                     case 1:
                         RegistrarElemento();
                         break;
+                    case 2:
+                        MostrarElementos();
+                        break;
+                    case 3:
+                        BuscarElemento();
+                        break;
                     case 9:
                         Console.WriteLine("Saliendo del programa...");
                         break;
                     default:
-                        if (opcion >= 2 && opcion <= 8)
+                        if (opcion >= 4 && opcion <= 8)
                         {
                             Console.WriteLine("Proximamente... Presione Enter.");
                             Console.ReadLine();
@@ -51,7 +57,6 @@ namespace GestionInventario
 
             } while (opcion != 9);
         }
-
         static void RegistrarElemento()
         {
             Console.Clear();
@@ -108,6 +113,70 @@ namespace GestionInventario
             contador++;
 
             Console.WriteLine("\n¡Producto registrado con exito! Presione Enter.");
+            Console.ReadLine();
+        }
+        static void MostrarElementos()
+        {
+            Console.Clear();
+            Console.WriteLine("--- LISTA DE PRODUCTOS ---");
+
+            if (contador == 0)
+            {
+                Console.WriteLine("No hay productos registrados en el sistema.");
+                Console.ReadLine();
+                return;
+            }
+
+            for (int i = 0; i < contador; i++)
+            {
+                Console.WriteLine("Posicion: " + i);
+                Console.WriteLine("Codigo: " + codigos[i]);
+                Console.WriteLine("Nombre: " + nombres[i]);
+                Console.WriteLine("Precio: S/. " + precios[i]);
+                Console.WriteLine("Stock: " + stocks[i] + " unidades");
+                Console.WriteLine("--------------------------------");
+            }
+
+            Console.WriteLine("Fin de la lista. Presione Enter.");
+            Console.ReadLine();
+        }
+        static void BuscarElemento()
+        {
+            Console.Clear();
+            Console.WriteLine("--- BUSCAR PRODUCTO POR CODIGO ---");
+
+            if (contador == 0)
+            {
+                Console.WriteLine("No hay productos registrados para buscar.");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Write("Ingrese el codigo del producto a buscar: ");
+            string codigoBuscar = Console.ReadLine();
+
+            bool encontrado = false;
+            for (int i = 0; i < contador; i++)
+            {
+                if (codigos[i] == codigoBuscar)
+                {
+                    Console.WriteLine("\n¡Producto Encontrado!");
+                    Console.WriteLine("Posicion: " + i);
+                    Console.WriteLine("Codigo: " + codigos[i]);
+                    Console.WriteLine("Nombre: " + nombres[i]);
+                    Console.WriteLine("Precio: S/. " + precios[i]);
+                    Console.WriteLine("Stock: " + stocks[i] + " unidades");
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (encontrado == false)
+            {
+                Console.WriteLine("\nEl codigo '" + codigoBuscar + "' no existe en el sistema.");
+            }
+
+            Console.WriteLine("\nPresione Enter para continuar.");
             Console.ReadLine();
         }
     }
