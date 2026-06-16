@@ -34,11 +34,14 @@ namespace GestionInventario
 
                 switch (opcion)
                 {
+                    case 1:
+                        RegistrarElemento();
+                        break;
                     case 9:
                         Console.WriteLine("Saliendo del programa...");
                         break;
                     default:
-                        if (opcion >= 1 && opcion <= 8)
+                        if (opcion >= 2 && opcion <= 8)
                         {
                             Console.WriteLine("Proximamente... Presione Enter.");
                             Console.ReadLine();
@@ -47,6 +50,65 @@ namespace GestionInventario
                 }
 
             } while (opcion != 9);
+        }
+
+        static void RegistrarElemento()
+        {
+            Console.Clear();
+            Console.WriteLine("--- REGISTRAR NUEVO PRODUCTO ---");
+
+            if (contador >= 100)
+            {
+                Console.WriteLine("Error: Inventario lleno (Maximo 100).");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Write("Ingrese codigo: ");
+            string codigo = Console.ReadLine();
+            while (codigo == "")
+            {
+                Console.WriteLine("El codigo no puede estar vacio.");
+                Console.Write("Ingrese codigo nuevamente: ");
+                codigo = Console.ReadLine();
+            }
+
+            Console.Write("Ingrese nombre/descripcion: ");
+            string nombre = Console.ReadLine();
+            while (nombre == "")
+            {
+                Console.WriteLine("El nombre no puede estar vacio.");
+                Console.Write("Ingrese nombre nuevamente: ");
+                nombre = Console.ReadLine();
+            }
+
+            Console.Write("Ingrese precio: ");
+            double precio = double.Parse(Console.ReadLine());
+            while (precio < 0)
+            {
+                Console.WriteLine("El precio no puede ser negativo.");
+                Console.Write("Ingrese precio nuevamente: ");
+                precio = double.Parse(Console.ReadLine());
+            }
+
+            Console.Write("Ingrese stock: ");
+            int stock = int.Parse(Console.ReadLine());
+            while (stock < 0)
+            {
+                Console.WriteLine("El stock no puede ser negativo.");
+                Console.Write("Ingrese stock nuevamente: ");
+                stock = int.Parse(Console.ReadLine());
+            }
+
+            codigos[contador] = codigo;
+            nombres[contador] = nombre;
+            precios[contador] = precio;
+            stocks[contador] = stock;
+
+            contador++;
+
+            Console.WriteLine("\n¡Producto registrado con exito! Presione Enter.");
+            Console.ReadLine();
         }
     }
 }
