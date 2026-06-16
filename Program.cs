@@ -46,11 +46,14 @@ namespace GestionInventario
                     case 4:
                         ModificarElemento();
                         break;
+                    case 5:
+                        InsertarEnPosicion();
+                        break;
                     case 9:
                         Console.WriteLine("Saliendo del programa...");
                         break;
                     default:
-                        if (opcion >= 5 && opcion <= 8)
+                        if (opcion >= 6 && opcion <= 8)
                         {
                             Console.WriteLine("Proximamente... Presione Enter.");
                             Console.ReadLine();
@@ -60,6 +63,7 @@ namespace GestionInventario
 
             } while (opcion != 9);
         }
+
         static void RegistrarElemento()
         {
             Console.Clear();
@@ -254,6 +258,83 @@ namespace GestionInventario
             stocks[posicionEncontrada] = nuevoStock;
 
             Console.WriteLine("\n¡Datos actualizados con éxito! Presione Enter.");
+            Console.ReadLine();
+        }
+
+        static void InsertarEnPosicion()
+        {
+            Console.Clear();
+            Console.WriteLine("--- INSERTAR PRODUCTO EN POSICION ---");
+
+            if (contador >= 100)
+            {
+                Console.WriteLine("Error: Inventario lleno.");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Write("Ingrese la posicion donde desea insertar (0 a " + contador + "): ");
+            int pos = int.Parse(Console.ReadLine());
+
+            if (pos < 0 || pos > contador)
+            {
+                Console.WriteLine("Error: Posicion fuera de rango.");
+                Console.ReadLine();
+                return;
+            }
+
+            for (int i = contador; i > pos; i--)
+            {
+                codigos[i] = codigos[i - 1];
+                nombres[i] = nombres[i - 1];
+                precios[i] = precios[i - 1];
+                stocks[i] = stocks[i - 1];
+            }
+
+            Console.Write("Ingrese codigo: ");
+            string codigo = Console.ReadLine();
+            while (codigo == "")
+            {
+                Console.WriteLine("El codigo no puede estar vacio.");
+                Console.Write("Ingrese codigo nuevamente: ");
+                codigo = Console.ReadLine();
+            }
+
+            Console.Write("Ingrese nombre: ");
+            string nombre = Console.ReadLine();
+            while (nombre == "")
+            {
+                Console.WriteLine("El nombre no puede estar vacio.");
+                Console.Write("Ingrese nombre nuevamente: ");
+                nombre = Console.ReadLine();
+            }
+
+            Console.Write("Ingrese precio: ");
+            double precio = double.Parse(Console.ReadLine());
+            while (precio < 0)
+            {
+                Console.WriteLine("El precio no puede ser negativo.");
+                Console.Write("Ingrese precio nuevamente: ");
+                precio = double.Parse(Console.ReadLine());
+            }
+
+            Console.Write("Ingrese stock: ");
+            int stock = int.Parse(Console.ReadLine());
+            while (stock < 0)
+            {
+                Console.WriteLine("El stock no puede ser negativo.");
+                Console.Write("Ingrese stock nuevamente: ");
+                stock = int.Parse(Console.ReadLine());
+            }
+
+            codigos[pos] = codigo;
+            nombres[pos] = nombre;
+            precios[pos] = precio;
+            stocks[pos] = stock;
+
+            contador++;
+
+            Console.WriteLine("\n¡Elemento insertado con éxito! Presione Enter.");
             Console.ReadLine();
         }
     }
