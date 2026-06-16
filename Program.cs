@@ -43,11 +43,14 @@ namespace GestionInventario
                     case 3:
                         BuscarElemento();
                         break;
+                    case 4:
+                        ModificarElemento();
+                        break;
                     case 9:
                         Console.WriteLine("Saliendo del programa...");
                         break;
                     default:
-                        if (opcion >= 4 && opcion <= 8)
+                        if (opcion >= 5 && opcion <= 8)
                         {
                             Console.WriteLine("Proximamente... Presione Enter.");
                             Console.ReadLine();
@@ -115,6 +118,7 @@ namespace GestionInventario
             Console.WriteLine("\n¡Producto registrado con exito! Presione Enter.");
             Console.ReadLine();
         }
+
         static void MostrarElementos()
         {
             Console.Clear();
@@ -140,6 +144,7 @@ namespace GestionInventario
             Console.WriteLine("Fin de la lista. Presione Enter.");
             Console.ReadLine();
         }
+
         static void BuscarElemento()
         {
             Console.Clear();
@@ -156,6 +161,7 @@ namespace GestionInventario
             string codigoBuscar = Console.ReadLine();
 
             bool encontrado = false;
+
             for (int i = 0; i < contador; i++)
             {
                 if (codigos[i] == codigoBuscar)
@@ -177,6 +183,77 @@ namespace GestionInventario
             }
 
             Console.WriteLine("\nPresione Enter para continuar.");
+            Console.ReadLine();
+        }
+
+        static void ModificarElemento()
+        {
+            Console.Clear();
+            Console.WriteLine("--- MODIFICAR PRODUCTO ---");
+
+            if (contador == 0)
+            {
+                Console.WriteLine("No hay productos registrados para modificar.");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Write("Ingrese el codigo del producto a modificar: ");
+            string codigoModificar = Console.ReadLine();
+
+            int posicionEncontrada = -1;
+
+            for (int i = 0; i < contador; i++)
+            {
+                if (codigos[i] == codigoModificar)
+                {
+                    posicionEncontrada = i;
+                    break;
+                }
+            }
+
+            if (posicionEncontrada == -1)
+            {
+                Console.WriteLine("\nEl codigo '" + codigoModificar + "' no fue encontrado.");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.WriteLine("\nProducto encontrado: " + nombres[posicionEncontrada]);
+            Console.WriteLine("Ingrese los nuevos datos del producto:");
+
+            Console.Write("Nuevo nombre: ");
+            string nuevoNombre = Console.ReadLine();
+            while (nuevoNombre == "")
+            {
+                Console.WriteLine("El nombre no puede estar vacio.");
+                Console.Write("Nuevo nombre nuevamente: ");
+                nuevoNombre = Console.ReadLine();
+            }
+
+            Console.Write("Nuevo precio: ");
+            double nuevoPrecio = double.Parse(Console.ReadLine());
+            while (nuevoPrecio < 0)
+            {
+                Console.WriteLine("El precio no puede ser negativo.");
+                Console.Write("Nuevo precio nuevamente: ");
+                nuevoPrecio = double.Parse(Console.ReadLine());
+            }
+
+            Console.Write("Nuevo stock: ");
+            int nuevoStock = int.Parse(Console.ReadLine());
+            while (nuevoStock < 0)
+            {
+                Console.WriteLine("El stock no puede ser negativo.");
+                Console.Write("Nuevo stock nuevamente: ");
+                nuevoStock = int.Parse(Console.ReadLine());
+            }
+
+            nombres[posicionEncontrada] = nuevoNombre;
+            precios[posicionEncontrada] = nuevoPrecio;
+            stocks[posicionEncontrada] = nuevoStock;
+
+            Console.WriteLine("\n¡Datos actualizados con éxito! Presione Enter.");
             Console.ReadLine();
         }
     }
