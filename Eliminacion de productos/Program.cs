@@ -430,6 +430,44 @@ namespace GestionInventario
             Console.WriteLine("Productos ordenados de menor a mayor precio.");
             Console.ReadLine();
         }
+        static void MostrarResumen()
+        {
+            Console.Clear();
+            Console.WriteLine("--- RESUMEN GENERAL ---");
 
-     }
+            if (contador == 0)
+            {
+                Console.WriteLine("No hay productos registrados.");
+                Console.ReadLine();
+                return;
+            }
+
+            double suma = 0;
+            double mayor = precios[0];
+            double menor = precios[0];
+
+            for (int i = 0; i < contador; i++)
+            {
+                suma = suma + precios[i];
+
+                if (precios[i] > mayor)
+                {
+                    mayor = precios[i];
+                }
+
+                if (precios[i] < menor)
+                {
+                    menor = precios[i];
+                }
+            }
+
+            Console.WriteLine("Total de productos: " + contador);
+            Console.WriteLine("Precio mas alto: S/. " + mayor);
+            Console.WriteLine("Precio mas bajo: S/. " + menor);
+            Console.WriteLine("Suma total de precios: S/. " + suma);
+            Console.ReadLine();
+        }
+    }
 }
+
+
